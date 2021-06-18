@@ -28,6 +28,9 @@ const int A0_1  = 5;// analog output for pulses
 
 const int pwdth = 2000; // pulse width in microseconds
 const int ipi   = 2000; // inter pulse interval in microseconds
+const int digPwdth = 2000; // pulse width in microseconds for the 8 bit digital channel
+const int digIpi   = 2000; // inter pulse interval in microseconds for the 8 bit digital channel
+
 //const int BR    = 115200;
 unsigned long strt_b;
 unsigned long strt_r;
@@ -129,10 +132,10 @@ void recvDateWithEndMarker() {
 
       if (inString.length()<3){
         // send 8 bit data
-        myport.send_8bit_data(inString.toInt());
-        delayMicroseconds(pwdth);
+        myport.send_8bit_data(inString.toInt() + 1);
+        delayMicroseconds(digPwdth);
         myport.send_8bit_data(0);
-        delayMicroseconds(pwdth);
+        delayMicroseconds(digIpi);
         
         // add flag to wait till timestamp is received
         evtIdReceived = true;
@@ -319,25 +322,25 @@ void recvDateWithEndMarker() {
       //Serial1.println("received");
       if (evtIdReceived == true && inString.length()==11){
         // send digital start timestamp, 44
-        myport.send_8bit_data(44);
-        delayMicroseconds(pwdth);
+        myport.send_8bit_data(44 + 1);
+        delayMicroseconds(digPwdth);
         myport.send_8bit_data(0);
-        delayMicroseconds(pwdth);
+        delayMicroseconds(digIpi);
 
         // send timestamp values
         for (int i = 0; i < 11;i++){
           tempNum = inString[i];
           // had to add 1 to the timestamp so we can represent 0s in the date
           myport.send_8bit_data(tempNum.toInt()+1); 
-          delayMicroseconds(pwdth);
+          delayMicroseconds(digPwdth);
           myport.send_8bit_data(0);
-          delayMicroseconds(pwdth);
+          delayMicroseconds(digIpi);
         }
         // send digital end timestamp, 45
-        myport.send_8bit_data(44);
-        delayMicroseconds(pwdth);
+        myport.send_8bit_data(45 + 1);
+        delayMicroseconds(digPwdth);
         myport.send_8bit_data(0);
-        delayMicroseconds(pwdth);
+        delayMicroseconds(digIpi);
         
         //send arduino timestamp back to tablet  
         mySerial.println(inString + " " + serialOutString);
