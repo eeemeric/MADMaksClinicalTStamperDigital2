@@ -1,6 +1,12 @@
 # MADMaksClinicalTStamperDigital2
 Arduino code for controlling the bluetooth module used in the clinical MultiAttribute Decision Making (MADMaks) experiment
-The Bluetooth module connects to an android tablet running the Experiment App, receives event identifiers and timestamps from the app, and provides 2 digital channels of output via BNC connectors to a Natus electrophysiology system. It also provides an 8 bit digital output to the same Natus electrophysiology system. 
+The Bluetooth module connects to an android tablet running the Experiment App, receives event identifiers and timestamps from the app, and provides 2 digital channels of output via BNC connectors to a Natus electrophysiology system. It also provides an 8 bit digital output to said Natus electrophysiology system.
+
+Technical Details
+* Bluetooth
+* Serial port
+* BNC connectors output
+* 8 bit parallel output
 
 **There are 2 sketches in this repository**
 * *MADMaksClinicalTStamperDigital2.ino*
